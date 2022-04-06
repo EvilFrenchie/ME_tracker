@@ -11,7 +11,7 @@ install python3.x (probably 3.7+??)
 
 
 ## run
-`py pricebot.py --guild="GM Coin" --channel="bot-testing" --token {discord auth token} --coin {token address} --frequency {freq in sec to post} --log info`
+`py me_collections_tracker.py --log info`
 
 
 ## todo
