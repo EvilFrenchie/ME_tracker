@@ -10,7 +10,7 @@ import argparse
 import json
 import copy
 from datetime import datetime
-
+import os
 
 #command line parameters (temp until better solution)
 parser = argparse.ArgumentParser(description='Startup settings for Magic Eden collections tracker')
@@ -27,6 +27,11 @@ logger.info("MAGIC EDEN COLLECTIONS TRACKER")
 previous_popular_collections_1day = {"default":"default"}
 popular_collections_detailed = []
 file_counter = 1
+
+
+if not os.path.exists('./popular_collection_24h_data'):
+  # Create a new directory because it does not exist 
+  os.makedirs('./popular_collection_24h_data')
 
 #refreshes price & volume info from dexlab once every 60 seconds
 #probably need to update this to be more async friendly (in the requests.get s)

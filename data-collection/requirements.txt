@@ -7,3 +7,5 @@ discord
 selenium
 beautifulsoup4
 webdriver-manager
+fastapi
+uvicorn
