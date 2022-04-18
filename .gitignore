@@ -130,3 +130,6 @@ dmypy.json
 
 /logs
 /popular_collection_24h_data
+
+.terraform/
+
