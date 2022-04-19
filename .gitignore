@@ -132,4 +132,6 @@ dmypy.json
 /popular_collection_24h_data
 
 .terraform/
-
+.terraform.lock.hcl
+terraform.tfstate
+terraform.tfstate.backup

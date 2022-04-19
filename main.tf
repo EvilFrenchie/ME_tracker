@@ -1,5 +1,13 @@
 #configure the azure provider
 terraform {
+  cloud {
+    organization = "evil-frenchie"
+
+    workspaces {
+      name = "ME_tracker"
+    }
+  }
+
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
