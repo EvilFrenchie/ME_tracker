@@ -13,3 +13,6 @@ variable "service_plan_name" {
 variable "linux_web_app_name" {
   default = "MagicEdenViz"
 }
+
+variable "github_token" {
+    default = <your token>

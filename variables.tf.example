@@ -1,0 +1,15 @@
+variable "resource_group_name" {
+  default = "myRg"
+}
+
+variable "container_registry_name" {
+  default = "myACR"
+}
+
+variable "service_plan_name" {
+  default = "mySvcPlan"
+}
+
+variable "linux_web_app_name" {
+  default = "myWebApp"
+}

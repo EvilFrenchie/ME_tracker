@@ -13,6 +13,11 @@ terraform {
       source  = "hashicorp/azurerm"
       version = "~> 3.0.2"
     }
+
+    github = {
+      source  = "integrations/github"
+      version = "~> 4.0"
+    }
   }
 
   required_version = ">= 1.1.0"
@@ -20,6 +25,10 @@ terraform {
 
 provider "azurerm" {
   features {}
+}
+
+provider "github" {
+    token = var.github_token # or `GITHUB_TOKEN`
 }
 
 #create a resource group
@@ -59,4 +68,14 @@ resource "azurerm_linux_web_app" "app" {
       
   }
 }
+resource "github_actions_secret" "ACR_PRINCIPAL_ID" {
+  repository       = "ME_tracker"
+  secret_name      = "ACR_PRINCIPAL_ID"
+  plaintext_value  = azurerm_container_registry.acr.identity.0.principal_id
+}
 
+resource "github_actions_secret" "ACR_TENANT_ID" {
+  repository       = "ME_tracker"
+  secret_name      = "ACR_TENANT_ID"
+  plaintext_value  = azurerm_container_registry.acr.identity.0.tenant_id
+}
