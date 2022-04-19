@@ -49,7 +49,6 @@ resource "azurerm_container_registry" "acr" {
   admin_enabled       = false
 }
 
-
 resource "azurerm_service_plan" "svcplan" {
   name                = var.service_plan_name
   resource_group_name = azurerm_resource_group.rg.name
@@ -57,7 +56,6 @@ resource "azurerm_service_plan" "svcplan" {
   os_type             = "Linux"
   sku_name            = "B1"
 }
-
 
 resource "azurerm_linux_web_app" "app" {
   name                = var.linux_web_app_name
@@ -68,14 +66,19 @@ resource "azurerm_linux_web_app" "app" {
       
   }
 }
+
 resource "github_actions_secret" "ACR_PRINCIPAL_ID" {
   repository       = "ME_tracker"
   secret_name      = "ACR_PRINCIPAL_ID"
-  plaintext_value  = azurerm_container_registry.acr.identity.0.principal_id
+  plaintext_value  = join("", flatten([
+    for identity in azurerm_container_registry.acr[*].identity : identity[*].principal_id
+  ]))
 }
 
 resource "github_actions_secret" "ACR_TENANT_ID" {
   repository       = "ME_tracker"
   secret_name      = "ACR_TENANT_ID"
-  plaintext_value  = azurerm_container_registry.acr.identity.0.tenant_id
+  plaintext_value  = join("", flatten([
+    for identity in azurerm_container_registry.acr[*].identity : identity[*].tenant_id
+  ]))
 }
