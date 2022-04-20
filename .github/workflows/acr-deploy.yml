@@ -41,21 +41,22 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - name: 'Login via Azure CLI'
-        uses: azure/login@v1
+
+      - uses: azure/docker-login@v1
         with:
-          creds: ${{ secrets.AZURE_CREDS }}
-      
-      #- uses: azure/docker-login@v1
-      #  with:
-      #    login-server: meacr.azurecr.io
-      #    username: ${{ secrets.REGISTRY_USERNAME }}
-      #    password: ${{ secrets.REGISTRY_PASSWORD }}
+          login-server: meacr.azurecr.io
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
       - run: |
           cd ./api
           docker build . -t meacr.azurecr.io/me_viz:${{ github.sha }}
           docker push meacr.azurecr.io/me_viz:${{ github.sha }}    
 
+      - name: 'Login via Azure CLI'
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDS }}
+      
       - name: 'Deploy Webapp' 
         uses: azure/webapps-deploy@v2
         with: 

@@ -79,6 +79,12 @@ resource "github_actions_secret" "REGISTRY_PASSWORD" {
   plaintext_value = azurerm_container_registry.acr.admin_password  
 }
 
+#Need to automate this part to get a login... & then use in the github workflow
+#   az ad sp create-for-rbac --name "myApp" --role contributor \
+#                            --scopes /subscriptions/{subscription-id}/resourceGroups/{resource-group} \
+#                            --sdk-auth
+
+
 # didn't need, but why was it so hard to get this tenant id?  
 #resource "github_actions_secret" "ACR_TENANT_ID" {
 #  repository       = "ME_tracker"
