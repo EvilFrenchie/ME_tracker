@@ -8,7 +8,7 @@ COPY ./app /app
 
 WORKDIR /app
 
-CMD ["python", "-m", "uvicorn", "me_visualization:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["python", "-m", "uvicorn", "me_visualization:app", "--host", "0.0.0.0", "--port", "80 "]
 
 
 
