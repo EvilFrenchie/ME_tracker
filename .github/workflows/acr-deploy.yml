@@ -27,7 +27,7 @@
 name: Build and deploy a container to an Azure Web App
 
 env:
-  AZURE_WEBAPP_NAME: your-app-name  # set this to the name of your Azure Web App
+  AZURE_WEBAPP_NAME: me_viz  # set this to the name of your Azure Web App
 
 on:
   push:
@@ -41,12 +41,29 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: azure/docker-login@v1
+      - name: 'Login via Azure CLI'
+        uses: azure/login@v1
         with:
-          login-server: meacr.azurecr.io
-          username: ${{ secrets.REGISTRY_USERNAME }}
-          password: ${{ secrets.REGISTRY_PASSWORD }}
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      
+      #- uses: azure/docker-login@v1
+      #  with:
+      #    login-server: meacr.azurecr.io
+      #    username: ${{ secrets.REGISTRY_USERNAME }}
+      #    password: ${{ secrets.REGISTRY_PASSWORD }}
       - run: |
           cd ./api
           docker build . -t meacr.azurecr.io/me_viz:${{ github.sha }}
           docker push meacr.azurecr.io/me_viz:${{ github.sha }}
+
+          - uses: azure/webapps-deploy@v2
+        with:
+            app-name: 'me_viz'
+            publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+            images: 'meacr.azurecr.io/me_viz:${{ github.sha }}'    
+            
+   - name: 'Deploy to Azure Web App for Container'
+      uses: azure/webapps-deploy@v2
+      with: 
+        app-name: 'MagicEdenViz'
+        images: 'meacr.azurecr.io/me_viz:${{ github.sha }}'
