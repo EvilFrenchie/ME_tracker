@@ -48,5 +48,5 @@ jobs:
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
       - run: |
-          docker build . -t meacr.azurecr.io/me_viz:${{ github.sha }}
+          docker build /api/. -t meacr.azurecr.io/me_viz:${{ github.sha }}
           docker push meacr.azurecr.io/me_viz:${{ github.sha }}
