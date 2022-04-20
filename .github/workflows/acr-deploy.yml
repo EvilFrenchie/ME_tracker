@@ -41,7 +41,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - name: 'Login via Azure CLI'
+      - name: ${{ secrets.AZURE_CREDS }}
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDS }}
