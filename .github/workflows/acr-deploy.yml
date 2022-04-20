@@ -46,7 +46,7 @@ jobs:
           login-server: meacr.azurecr.io
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
-        working-directory: ./api
-      - run: 
+      - working-directory: ./api
+      - run: |
           docker build . -t meacr.azurecr.io/me_viz:${{ github.sha }}
           docker push meacr.azurecr.io/me_viz:${{ github.sha }}
