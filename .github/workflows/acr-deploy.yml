@@ -60,10 +60,9 @@ jobs:
         with:
             app-name: 'me_viz'
             publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-            images: 'meacr.azurecr.io/me_viz:${{ github.sha }}'    
-            
-   - name: 'Deploy to Azure Web App for Container'
-      uses: azure/webapps-deploy@v2
-      with: 
-        app-name: 'MagicEdenViz'
-        images: 'meacr.azurecr.io/me_viz:${{ github.sha }}'
+            images: 'meacr.azurecr.io/me_viz:${{ github.sha }}'             
+      - name: 'Deploy Webapp' 
+        uses: azure/webapps-deploy@v2
+        with: 
+          app-name: 'MagicEdenViz'
+          images: 'meacr.azurecr.io/me_viz:${{ github.sha }}'
