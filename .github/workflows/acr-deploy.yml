@@ -52,13 +52,30 @@ jobs:
           docker build . -t meacr.azurecr.io/me_viz:${{ github.sha }}
           docker push meacr.azurecr.io/me_viz:${{ github.sha }}    
 
-      #- name: 'Login via Azure CLI'
-      #  uses: azure/login@v1
-      #  with:
-      #    creds: ${{ secrets.AZURE_CREDS }}
+      - name: 'Login via Azure CLI'
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDS }}
       
+      - name: Azure CLI script
+        uses: azure/CLI@v1
+        with:
+          azcliversion: 2.30.0
+          inlineScript: |
+            ACR_NAME=meacr.azurecr.io
+            SERVICE_PRINCIPAL_NAME=newServicePrincipal
+            ACR_REGISTRY_ID=$(az acr show --name $ACR_NAME --query "id" --output tsv)
+            echo $registryId
+            PASSWORD=$(az ad sp create-for-rbac --name $SERVICE_PRINCIPAL_NAME --scopes $ACR_REGISTRY_ID --role acrpull --query "password" --output tsv)
+            USER_NAME=$(az ad sp list --display-name $SERVICE_PRINCIPAL_NAME --query "[].appId" --output tsv)
+            echo "Service principal ID: $USER_NAME"
+            echo "Service principal password: $PASSWORD"
+
       - name: 'Deploy Webapp' 
         uses: azure/webapps-deploy@v2
         with: 
           app-name: 'MagicEdenViz'
           images: 'meacr.azurecr.io/me_viz:${{ github.sha }}'
+
+    # not able to pull from the acr once deployed - need to do this
+    # https://docs.microsoft.com/en-us/azure/container-registry/container-registry-auth-aci#create-a-service-principal
