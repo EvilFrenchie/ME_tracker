@@ -63,7 +63,6 @@ resource "azurerm_linux_web_app" "app" {
   location            = azurerm_service_plan.svcplan.location
   service_plan_id     = azurerm_service_plan.svcplan.id
   site_config {
-
   }
 }
 
@@ -76,7 +75,7 @@ resource "github_actions_secret" "REGISTRY_USERNAME" {
 resource "github_actions_secret" "REGISTRY_PASSWORD" {
   repository      = "ME_tracker"
   secret_name     = "REGISTRY_PASSWORD"
-  plaintext_value = azurerm_container_registry.acr.admin_password  
+  plaintext_value = azurerm_container_registry.acr.admin_password
 }
 
 #Need to automate this part to get a login... & then use in the github workflow
@@ -84,12 +83,13 @@ resource "github_actions_secret" "REGISTRY_PASSWORD" {
 #                            --scopes /subscriptions/{subscription-id}/resourceGroups/{resource-group} \
 #                            --sdk-auth
 
+# Need to add some variables like 
 
 # didn't need, but why was it so hard to get this tenant id?  
 #resource "github_actions_secret" "ACR_TENANT_ID" {
 #  repository       = "ME_tracker"
 #  secret_name      = "ACR_TENANT_ID"
 #  plaintext_value  = join("", flatten([
-#    for identity in azurerm_container_registry.acr[*].identity : identity[*].tenant_id
+#    for identity in azurerm_container_registry.acr[*].identity : identity[*].client_id
 #  ]))
 #}

@@ -52,10 +52,10 @@ jobs:
           docker build . -t meacr.azurecr.io/me_viz:${{ github.sha }}
           docker push meacr.azurecr.io/me_viz:${{ github.sha }}    
 
-      - name: 'Login via Azure CLI'
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDS }}
+      #- name: 'Login via Azure CLI'
+      #  uses: azure/login@v1
+      #  with:
+      #    creds: ${{ secrets.AZURE_CREDS }}
       
       - name: 'Deploy Webapp' 
         uses: azure/webapps-deploy@v2
