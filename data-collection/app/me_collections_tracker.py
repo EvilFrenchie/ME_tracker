@@ -63,6 +63,11 @@ async def data_refresh():
         popular_collections_detailed.append(collection_snapshot)
         await asyncio.sleep(1)
 
+    # need to handle response
+        # {"status":500,"message":"Something went wrong"}
+        
+    # need to handle loss of browser handle (close all chrome instances and reset??)
+
     #print(popular_collections_detailed)
 
     #ensure browser has focus & close it
@@ -77,11 +82,11 @@ async def data_refresh():
     previous_popular_collections_1day = popular_collections_1day
 
     now = datetime.now()
-    with open(f"./popular_collection_24h_data/popular_collections_24h_{ now.strftime('%d_%m_%Y_%H_%M') }.json", 'w+') as outfile:
+    with open(f"./popular_collection_24h_data/popular_collections_24h_{ now.strftime('%m_%d_%Y_%H_%M') }.json", 'w+') as outfile:
         json.dump(popular_collections_1day, outfile)
 
-    #sleep 600 seconds & do it all over again
-    await asyncio.sleep(600)
+    #sleep 300 seconds & do it all over again
+    await asyncio.sleep(300)
 
 
 if __name__ ==  '__main__':

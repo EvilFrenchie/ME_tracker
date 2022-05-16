@@ -129,7 +129,7 @@ dmypy.json
 .pyre/
 
 /logs
-/popular_collection_24h_data
+/data-collection/app/popular_collection_24h_data/
 
 .terraform/
 .terraform.lock.hcl
@@ -137,3 +137,4 @@ terraform.tfstate
 terraform.tfstate.backup
 
 variables.tf
+
